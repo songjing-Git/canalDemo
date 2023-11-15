@@ -30,7 +30,6 @@ public class CanalClient {
         );
         canalConnector.connect();
         canalConnector.subscribe("canal.canal_test01");
-        canalConnector.rollback();
 
         while (true) {
             com.alibaba.otter.canal.protocol.Message message = canalConnector.getWithoutAck(1);
@@ -52,6 +51,7 @@ public class CanalClient {
                 if (entryType == CanalEntry.EntryType.ROWDATA) {
 
                     CanalEntry.RowChange rowChange = CanalEntry.RowChange.parseFrom(storeValue);
+                    logger.info(" rowChange is \n{}", rowChange);
                     //获取操作类型
                     CanalEntry.EventType eventType = rowChange.getEventType();
                     if (list.contains(eventType)) {
@@ -60,14 +60,14 @@ public class CanalClient {
 
                         for (CanalEntry.RowData rowData : rowDatasList) {
                             List<CanalEntry.Column> beforeColumnsList = rowData.getBeforeColumnsList();
-                            logger.info("tableName is {} row data is {}", tableName, rowData);
+                            logger.info("tableName is {} row data is \n{}", tableName, rowData);
                             for (CanalEntry.Column column : beforeColumnsList) {
-                                logger.info(" before data is  name {} value is {}", column.getName(), column.getValue());
+                                logger.info(" before data is {}  is {}", column.getName(), column.getValue());
                             }
 
                             List<CanalEntry.Column> afterColumnsList = rowData.getAfterColumnsList();
                             for (CanalEntry.Column column : afterColumnsList) {
-                                logger.info(" after data is  name {} value is {}", column.getName(), column.getValue());
+                                logger.info(" after data is {} is {}", column.getName(), column.getValue());
                             }
                         }
                     }

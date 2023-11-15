@@ -9,7 +9,7 @@ import javax.annotation.Resource;
 
 @SpringBootApplication
 public class CanalApplication
-//implements CommandLineRunner
+implements CommandLineRunner
 {
     @Resource
     private CanalClient canalClient;
@@ -17,7 +17,7 @@ public class CanalApplication
         SpringApplication.run(CanalApplication.class, args);
     }
 
-//    public void run(String... args) throws Exception {
-//        canalClient.run();
-//    }
+    public void run(String... args) throws Exception {
+        canalClient.run();
+    }
 }

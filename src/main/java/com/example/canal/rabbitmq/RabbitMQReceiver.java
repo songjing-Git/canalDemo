@@ -22,7 +22,7 @@ public class RabbitMQReceiver {
     @RabbitListener(queues = "canal-queue")
     public void receiver(Message message) throws UnsupportedEncodingException {
         String s = new String(message.getBody(), "UTF-8");
-        logger.info(" message is {}", s);
+        logger.info(" message is \n{}", s);
 
     }
 }
